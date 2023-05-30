@@ -86,7 +86,7 @@ class Visualizer{
     }
 
     clearCanvas(){
-        this.ctx.fillStyle="transparent"
+        this.ctx.fillStyle="white"
         this.ctx.fillRect(0,0,this.width, this.height)
     }
 
