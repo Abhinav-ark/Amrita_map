@@ -6,7 +6,6 @@ class Visualizer{
         this.width = w;
         this.height = h;
         this.ctx = ctx;
-        this.ctx.globalAlpha=1.0;
         this.distance = distance;
         this.nodeNumber = 15;
         this.pathFrequency = 0.8;
@@ -111,8 +110,8 @@ class Visualizer{
         this.ctx.moveTo(pointA.x, pointA.y);
         this.ctx.lineTo(pointB.x, pointB.y);
         this.ctx.stroke();
-        if(color === 'green'){
-            this.distance.innerText = "Total travel distance to last point: " + Math.floor(pointA.distance);
+        if(color === 'black'){
+            this.distance.innerText = "Total travel distance to last point: " + Math.floor(pointB.distance);
         }
 
     }
@@ -152,7 +151,7 @@ class Visualizer{
 
             if(node.parent !== null){
 
-                lines.push([this.points[node.parent], node, 'red'].slice())
+                lines.push([this.points[node.parent], node, 'black'].slice())
 
 
                 // this.drawPath(this.points[node.parent], node, 'black');
@@ -186,7 +185,7 @@ class Visualizer{
         else{
             while(node.parent !== null){
 
-                lines.push([node, this.points[node.parent], 'green'].slice())
+                lines.push([node, this.points[node.parent], 'red'].slice())
 
                 // this.drawPath(node, this.points[node.parent], 'red');
                 node = this.points[node.parent];
