@@ -86,6 +86,7 @@ class Visualizer{
     }
 
     clearCanvas(){
+        /*this.ctx.fillStyle="transparent"*/
         this.ctx.fillStyle="white"
         this.ctx.fillRect(0,0,this.width, this.height)
     }
@@ -260,8 +261,8 @@ document.addEventListener("DOMContentLoaded", () => {
     search.onclick = ()=>vis.dijkstra();
     
 
-    const slider = document.getElementById("nodeSlider");
-    const slider2 = document.getElementById("pathFrequency");
+    const slider = 10;
+    const slider2 = 14;
 
     slider.oninput = function() {
         vis.nodeNumber = this.value; 
