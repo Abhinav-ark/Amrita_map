@@ -238,14 +238,15 @@ class Visualizer{
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    const canvas = document.getElementById("canvas");
+    var canvas = new fabric.Canvas("canvas");
     const width = canvas.width;
     const height = canvas.height
     let ctx = canvas.getContext("2d");
 
     let distance = document.getElementById('distance');
 
-
+    
+      
    
     const vis = new Visualizer(width, height, ctx, distance);
     vis.generatePoints();
@@ -255,11 +256,37 @@ document.addEventListener("DOMContentLoaded", () => {
     let search = document.getElementById('search');
 
   
-
+    
 
     populate.onclick = ()=>vis.generatePoints();
     search.onclick = ()=>vis.dijkstra();
     
+    var target = document.querySelector("#canvas")
+    window.addEventListener("wheel", function(e){
+    e.preventDefault();
+    if (e.ctrlKey) {
+        console.log("pinch", e.deltaY)
+        var width = getStyleInt(target, "width")
+        var newWidth = width - e.deltaY
+        setStyleInt(target, "width", newWidth)
+        setStyleInt(target, "height", newWidth)
+    } else {
+        console.log("pan", e.deltaX, e.deltaY)
+        var x = getStyleInt(target, "left")
+        setStyleInt(target, "left", x-e.deltaX)
+        var y = getStyleInt(target, "top")
+        setStyleInt(target, "top", y-e.deltaY)
+    }
+    }, {passive: false})
+
+    function getStyleInt(target, key) {
+    var val = getComputedStyle(target)[key];
+    return parseInt(val, 10)
+    }
+
+    function setStyleInt(target, key, val) {
+    target.style[key] = val+"px"
+    }
 
     const slider = 10;
     const slider2 = 14;
