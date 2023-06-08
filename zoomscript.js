@@ -2,6 +2,10 @@ var target = document.querySelector("#canvas");
 var isPinching = false;
 var startPinchDistance = 0;
 var startWidth = 0;
+var touchStartX = 0;
+var touchStartY = 0;
+var panX = 0;
+var panY = 0;
 
 target.addEventListener("wheel", function (e) {
   e.preventDefault();
@@ -27,6 +31,12 @@ target.addEventListener("touchstart", function (e) {
     isPinching = true;
     startPinchDistance = getPinchDistance(e.touches[0], e.touches[1]);
     startWidth = getStyleInt(target, "width");
+  } else if (e.touches.length === 1) {
+    // Start of pan gesture
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+    panX = getStyleInt(target, "left");
+    panY = getStyleInt(target, "top");
   }
 });
 
@@ -38,6 +48,14 @@ target.addEventListener("touchmove", function (e) {
     var newWidth = startWidth * scale;
     setStyleInt(target, "width", newWidth);
     setStyleInt(target, "height", newWidth);
+  } else if (e.touches.length === 1) {
+    // Pan gesture
+    var touchX = e.touches[0].clientX;
+    var touchY = e.touches[0].clientY;
+    var deltaX = touchX - touchStartX;
+    var deltaY = touchY - touchStartY;
+    setStyleInt(target, "left", panX + deltaX);
+    setStyleInt(target, "top", panY + deltaY);
   }
 });
 
