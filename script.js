@@ -1,5 +1,6 @@
 class Visualizer{
-    constructor(w, h, ctx, distance, nodeSlider){
+    constructor(image, w, h, ctx, distance, nodeSlider){
+        this.img=image;
         this.points = [];
         this.edges = {};
         this.int = 0;
@@ -28,7 +29,6 @@ class Visualizer{
 
         //this.sortEdges();
         this.clearCanvas();
-        this.drawPoints();
     }
 
 
@@ -65,7 +65,15 @@ class Visualizer{
     clearCanvas(){
         /*this.ctx.fillStyle="transparent"*/
         this.ctx.fillStyle="white"
+        // this.ctx.drawImage('./Res/VCmap.jpg', 0, 0);
         this.ctx.fillRect(0,0,this.width, this.height)
+        this.drawMap()
+    }
+
+    drawMap()
+    {
+        this.ctx.drawImage(this.img, 0, 0, this.width, this.height);
+        this.drawPoints();
     }
 
     getDistance(A, B){
@@ -104,135 +112,111 @@ class Visualizer{
         )
     }
 
-    dijkstra(src,dst){
-        if(!((src===-1) || (dst===-1)))
-        {
-            //
-            [this.points[0],this.points[src]]=[this.points[src],this.points[0]];
-            [this.points[0].id,this.points[src].id]=[this.points[src].id,this.points[0].id];
-            [this.points[this.points.length-1],this.points[dst]]=[this.points[dst],this.points[this.points.length-1]];
-            [this.points[this.points.length-1].id,this.points[dst].id]=[this.points[dst].id,this.points[this.points.length-1].id];
-            this.sortEdges();
-            console.log("d",src,dst);
-            //
-
-            this.points[src].distance = 0;
-            let visited = new Set();
-            let queue = [...this.points];
-            let node;
-            let lines = [];
-            let solved = false;
-            while(queue.length > 0){
-
-                let distances = queue.map(el => el.distance)
-                let min = Math.min(...distances)
-                let idx = distances.indexOf(min)
-                let lastNode = node;
-                node = queue[idx];
-
-
-                if(node.parent !== null){
-
-                    lines.push([this.points[node.parent], node, 'black'].slice())
-
-
-                    // this.drawPath(this.points[node.parent], node, 'black');
-                }
-
-                queue.splice(idx, 1);
-                visited.add(node);
-
-                if(node.id === this.points.length-1){
-                    if(node.distance !== Infinity){
-                        solved = true;
-                    }
-                    break;
-                }
-
-                this.edges[node.id].forEach(node2 => {
-                    if(visited[node2]){return;}
-
-                    let newdist = node.distance + this.getDistance(node.id, node2);
-
-                    if(newdist < this.points[node2].distance){
-                        this.points[node2].distance =  newdist
-                        this.points[node2].parent = node.id;
-                    }
-                })
-            }
-            if(!solved){
-                this.ctx.font = '30px serif';
-                this.ctx.fillText("Place not accessible", 25, 50);
-            }
-            else{
-                while(node.parent !== null){
-
-                    lines.push([node, this.points[node.parent], 'red'].slice())
-
-                    // this.drawPath(node, this.points[node.parent], 'red');
-                    node = this.points[node.parent];
-                }
-            }
-
-            this.int = this.drawLinesSlowly(lines,src,dst);
-            return node.distance;
+    dijkstra(src, dst) {
+        if (src === -1 || dst === -1) {
+          return;
         }
-    }
-
-
-
-    drawLinesSlowly(lines,src,dst){
+      
+        this.points.forEach((point) => {
+          point.distance = Infinity;
+          point.parent = null;
+        });
+        this.points[src].distance = 0;
         
-        if(this.int){
-
-            clearInterval(this.int)
-            this.clearCanvas();
-            this.drawEdges();
-            this.drawPoints(src,dst);
+        let visited = new Set();
+        let queue = [...this.points];
+        let lines = [];
+        let solved = false;
+      
+        while (queue.length > 0) {
+          queue.sort((a, b) => a.distance - b.distance);
+          let node = queue.shift();
+      
+          visited.add(node.id);
+      
+          if (node.id === dst) {
+            solved = true;
+            break;
+          }
+      
+          this.edges[node.id].forEach((node2) => {
+            if (visited.has(node2)) {
+              return;
+            }
+      
+            let newDist = node.distance + this.getDistance(node.id, node2);
+      
+            if (newDist < this.points[node2].distance) {
+              this.points[node2].distance = newDist;
+              this.points[node2].parent = node.id;
+            }
+          });
         }
-
-        if(lines.length === 0){
-            return;
+      
+        if (!solved) {
+          this.ctx.font = "30px serif";
+          this.ctx.fillText("Place not accessible", 25, 50);
+        } else {
+          let node = this.points[dst];
+          while (node.parent !== null) {
+            lines.push([node, this.points[node.parent], "red"].slice());
+            node = this.points[node.parent];
+          }
         }
+      
+        this.int = this.drawLinesSlowly(lines, src, dst);
+        return this.points[dst].distance;
+      }
 
+
+
+      drawLinesSlowly(lines, src, dst) {
+        if (this.int) {
+          clearInterval(this.int);
+          this.clearCanvas();
+          this.drawEdges();
+          this.drawPoints(src, dst);
+        }
+    
+        if (lines.length === 0) {
+          return;
+        }
+    
         const drawPath = this.drawPath.bind(this);
-
-
-        let int = setInterval( 
-            handleThing, 800
-        )
-        let i = 0
-
-        function handleThing(){
-            let next = lines[i]
-            drawPath(...next);
-            i += 1
-            if(i >= lines.length){
-                clearInterval(int)
-            }
-
-        }
-
-
-        return int;
-    }
-
-    solve()
-    {
-        let src=Number(document.getElementById('start').value);
-        let dst=Number(document.getElementById('end').value);
+    
+        let i = 0;
+        let interval = setInterval(() => {
+          let next = lines[i];
+          drawPath(...next);
+          i += 1;
+    
+          if (i >= lines.length) {
+            clearInterval(interval);
+          }
+        }, 800);
+    
+        return interval;
+      }
+    
+      solve() {
+        let src = Number(document.getElementById("start").value);
+        let dst = Number(document.getElementById("end").value);
         this.clearCanvas();
-        this.drawPoints(src,dst);
-        if(src!=0 && dst!=0)
-        {
-            this.dijkstra(src,dst);
+        this.drawPoints(src, dst);
+    
+        if (src !== 0 || dst !== 0) {
+          this.sortEdges();
+          let distance = this.dijkstra(src, dst);
+          console.log(distance);
         }
-        
-    }
+      }
 
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+    let img = new Image();
+    img.src = './Res/VCmap.jpg';
+
     var canvas = new fabric.Canvas("canvas");
     // var canvas=document.getElementById("canvas")
     const width = canvas.width;
@@ -241,14 +225,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let distance = document.getElementById('distance');
 
-    const vis = new Visualizer(width, height, ctx, distance);
-    vis.generatePoints();
+    var vis =null;
+
+    img.onload = function () {
+        vis = new Visualizer(img, width, height, ctx, distance);
+        vis.generatePoints();     // FILL THE CANVAS WITH THE IMAGE.
+    }
+
+    
     
     //
-    
     //
     
     let search = document.getElementById('search');
     search.onclick = ()=>vis.solve();
 
 });
+
+
