@@ -18,10 +18,11 @@
     }
 }
 
+
 #map{
     margin:auto;
     border: 1px solid white;
-    border-radius:20px;
+    border-radius: 20px;
     background-color: #a2bde2;
     height: 35em;
     width: 19em;
@@ -53,7 +54,6 @@
  */
 #canvas{
     /* border: 1px solid white; */
-    border-radius:20px;
     background: transparent;
     z-index: 1;
     min-height: 35em;
@@ -64,15 +64,17 @@
 
 #search{
     background-color: #04a96d; 
-    border: none;
+    border: 1px white solid;
     color: white;
-    font-size: 1em;
+    font-size: 0.5em;
     font-weight: bolder;
-    border-radius: 23px;
+    border-radius: 30px;
     text-align: center;
     -webkit-text-stroke: 1px white;
     cursor: pointer;
     margin:10px;
+    padding: 7px;
+    padding-bottom: 2px;
     float: right;
 }
 /* #search:hover{
