@@ -6,6 +6,7 @@ var touchStartX = 0;
 var touchStartY = 0;
 var panX = 0;
 var panY = 0;
+var rotationAngle = 0;
 
 target.addEventListener("wheel", function (e) {
   e.preventDefault();
@@ -62,6 +63,26 @@ target.addEventListener("touchmove", function (e) {
 target.addEventListener("touchend", function () {
   // End of pinch gesture
   isPinching = false;
+});
+
+target.addEventListener("touchstart", function (e) {
+  if (e.touches.length === 2) {
+    // Start of rotation gesture
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+  }
+});
+
+target.addEventListener("touchmove", function (e) {
+  if (e.touches.length === 2) {
+    // Rotate
+    var touchX = e.touches[0].clientX;
+    var touchY = e.touches[0].clientY;
+    var deltaX = touchX - touchStartX;
+    var deltaY = touchY - touchStartY;
+    rotationAngle += (deltaX + deltaY) * 0.2;
+    setStyleInt(target, "transform", "rotate(" + rotationAngle + "deg)");
+  }
 });
 
 function getStyleInt(target, key) {
