@@ -8,6 +8,7 @@ var touchStartY = 0;
 var panX = 0;
 var panY = 0;
 var rotationAngle = 0;
+var maxDisplacement = 500; // Maximum displacement in pixels for pan gestures
 
 source.addEventListener("wheel", function (e) {
   e.preventDefault();
@@ -21,9 +22,16 @@ source.addEventListener("wheel", function (e) {
   } else {
     // Pan
     var x = getStyleInt(target, "left");
-    setStyleInt(target, "left", x - e.deltaX);
+    var newX = x - e.deltaX;
     var y = getStyleInt(target, "top");
-    setStyleInt(target, "top", y - e.deltaY);
+    var newY = y - e.deltaY;
+
+    // Limit pan displacement
+    newX = Math.max(Math.min(newX, maxDisplacement), -maxDisplacement);
+    newY = Math.max(Math.min(newY, maxDisplacement), -maxDisplacement);
+
+    setStyleInt(target, "left", newX);
+    setStyleInt(target, "top", newY);
   }
 });
 
@@ -56,8 +64,15 @@ source.addEventListener("touchmove", function (e) {
     var touchY = e.touches[0].clientY;
     var deltaX = touchX - touchStartX;
     var deltaY = touchY - touchStartY;
-    setStyleInt(target, "left", panX + deltaX);
-    setStyleInt(target, "top", panY + deltaY);
+    var newX = panX + deltaX;
+    var newY = panY + deltaY;
+
+    // Limit pan displacement
+    newX = Math.max(Math.min(newX, maxDisplacement), -maxDisplacement);
+    newY = Math.max(Math.min(newY, maxDisplacement), -maxDisplacement);
+
+    setStyleInt(target, "left", newX);
+    setStyleInt(target, "top", newY);
   }
 });
 
@@ -82,8 +97,7 @@ source.addEventListener("touchmove", function (e) {
     var deltaX = touchX - touchStartX;
     var deltaY = touchY - touchStartY;
     rotationAngle += (deltaX + deltaY) * 0.02;
-    target.style.transform='rotate('+rotationAngle+'deg)';
-    console.log("testrotation");
+    target.style.transform = 'rotate(' + rotationAngle + 'deg)';
   }
 });
 
