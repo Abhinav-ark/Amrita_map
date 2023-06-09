@@ -21,6 +21,7 @@
 #map{
     margin:auto;
     border: 1px solid white;
+    border-radius:20px;
     background-color: #a2bde2;
     height: 35em;
     width: 19em;
