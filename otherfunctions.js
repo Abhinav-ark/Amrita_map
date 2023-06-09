@@ -17,3 +17,7 @@ function originalPos(){
     target.style.height='35em';
     target.style.width='19em';
 }
+
+function mapNavInfo(){
+    alert("On a TouchSceen, Use 1 finger to Pan, 2 fingers to zoom and 3 fingers to rotate.");
+}
