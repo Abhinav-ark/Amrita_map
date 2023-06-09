@@ -1,3 +1,4 @@
+var source = document.querySelector("#map");
 var target = document.querySelector("#canvas");
 var isPinching = false;
 var startPinchDistance = 0;
@@ -8,7 +9,7 @@ var panX = 0;
 var panY = 0;
 var rotationAngle = 0;
 
-target.addEventListener("wheel", function (e) {
+source.addEventListener("wheel", function (e) {
   e.preventDefault();
 
   if (e.ctrlKey) {
@@ -26,7 +27,7 @@ target.addEventListener("wheel", function (e) {
   }
 });
 
-target.addEventListener("touchstart", function (e) {
+source.addEventListener("touchstart", function (e) {
   if (e.touches.length === 2) {
     // Start of pinch gesture
     isPinching = true;
@@ -41,7 +42,7 @@ target.addEventListener("touchstart", function (e) {
   }
 });
 
-target.addEventListener("touchmove", function (e) {
+source.addEventListener("touchmove", function (e) {
   if (isPinching && e.touches.length === 2) {
     // Pinch gesture
     var currentPinchDistance = getPinchDistance(e.touches[0], e.touches[1]);
@@ -60,12 +61,12 @@ target.addEventListener("touchmove", function (e) {
   }
 });
 
-target.addEventListener("touchend", function () {
+source.addEventListener("touchend", function () {
   // End of pinch gesture
   isPinching = false;
 });
 
-target.addEventListener("touchstart", function (e) {
+source.addEventListener("touchstart", function (e) {
   if (e.touches.length === 3) {
     // Start of rotation gesture
     touchStartX = e.touches[0].clientX;
@@ -73,14 +74,14 @@ target.addEventListener("touchstart", function (e) {
   }
 });
 
-target.addEventListener("touchmove", function (e) {
+source.addEventListener("touchmove", function (e) {
   if (e.touches.length === 3) {
     // Rotate
     var touchX = e.touches[0].clientX;
     var touchY = e.touches[0].clientY;
     var deltaX = touchX - touchStartX;
     var deltaY = touchY - touchStartY;
-    rotationAngle += (deltaX + deltaY) * 0.2;
+    rotationAngle += (deltaX + deltaY) * 0.02;
     var rot = "rotate(" + String(rotationAngle) + "deg)";
     console.log("rot degrees: ",rot);
     target.style.transform='rotate('+rotationAngle+'deg)';
