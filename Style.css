@@ -53,6 +53,7 @@
  */
 #canvas{
     /* border: 1px solid white; */
+    border-radius:20px;
     background: transparent;
     z-index: 1;
     min-height: 35em;
