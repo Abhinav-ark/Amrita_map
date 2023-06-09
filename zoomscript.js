@@ -82,10 +82,8 @@ source.addEventListener("touchmove", function (e) {
     var deltaX = touchX - touchStartX;
     var deltaY = touchY - touchStartY;
     rotationAngle += (deltaX + deltaY) * 0.02;
-    var rot = "rotate(" + String(rotationAngle) + "deg)";
-    console.log("rot degrees: ",rot);
     target.style.transform='rotate('+rotationAngle+'deg)';
-    console.log("test");
+    console.log("testrot");
   }
 });
 
