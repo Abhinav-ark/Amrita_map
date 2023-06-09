@@ -254,6 +254,11 @@ body{
     margin-top: 1em;
  }
 
+ #end{
+    margin-top: 15px;
+    margin-bottom: 10px;
+ }
+
  *{
     font-family: 'Poppins', sans-serif;
     -webkit-tap-highlight-color: transparent;
