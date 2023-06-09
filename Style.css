@@ -144,6 +144,26 @@
     transition: all 10ms ease-in;
 }
 
+#mapNavInfo{
+    background-color: transparent; 
+    border:none;
+    border-radius:5px;
+    color: white;
+    font-size: 1.2em;
+    font-weight: bolder;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    margin-left: 5px;
+    padding-top: 10px;
+    float: left;
+}
+
+#mapNavInfo:active{
+    transform: scale(1.1);
+    transition: all 10ms ease-in;
+}
+
 body{
     background: black;
     color: white;
