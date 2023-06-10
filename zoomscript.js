@@ -82,7 +82,7 @@ source.addEventListener("touchend", function () {
 });
 
 source.addEventListener("touchstart", function (e) {
-  if (e.touches.length === 2) {
+  if (e.touches.length === 3 || e.touches.length === 4) {
     // Start of rotation gesture
     touchStartX = e.touches[0].clientX;
     touchStartY = e.touches[0].clientY;
@@ -90,7 +90,7 @@ source.addEventListener("touchstart", function (e) {
 });
 
 source.addEventListener("touchmove", function (e) {
-  if (e.touches.length === 2) {
+  if (e.touches.length === 3 || e.touches.length === 4) {
     // Rotate
     var touchX = e.touches[0].clientX;
     var touchY = e.touches[0].clientY;
