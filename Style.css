@@ -129,7 +129,7 @@
     transition: all 10ms ease-in;
 }
 
-.moreControls, .moreControls-right{
+.moreControls{
     background-color: transparent; 
     border:none;
     border-radius:5px;
@@ -141,14 +141,7 @@
     cursor: pointer;
     margin-left: 5px;
     padding-top: 10px;
-}
-
-.moreControls{
-    float: left;
-}
-
-.moreControls-right{
-    float: right;
+     float: left;
 }
 
 .moreControls:active{
