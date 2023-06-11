@@ -9,6 +9,7 @@ class Visualizer{
         this.ctx = ctx;
         this.distance = distance;
         this.totalDist=0;
+        this.map={"Police Station":0, "Burger":1, "Mall":2, "Arcade":3, "Bridge":4, "Railway Station":5, "Island":6, "Store":7};
     }
 
     generatePoints = () =>{
@@ -232,8 +233,8 @@ class Visualizer{
       }
     
       solve() {
-        let src = Number(document.getElementById("start").value);
-        let dst = Number(document.getElementById("end").value);
+        let src = this.map[document.getElementById("start").value];
+        let dst = this.map[document.getElementById("end").value];
         this.clearCanvas();
         this.drawPoints(src, dst);
     
