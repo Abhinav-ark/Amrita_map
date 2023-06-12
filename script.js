@@ -248,6 +248,9 @@ class Visualizer{
     
       solve() {
         i=0;
+        this.aStarNodes=[];
+        this.aStarDists=[];
+        this.aStarPoints=[];
         let src = this.map[document.getElementById("start").value];
         let dst = this.map[document.getElementById("end").value];
         this.clearCanvas();
