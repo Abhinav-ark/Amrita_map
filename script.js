@@ -247,6 +247,7 @@ class Visualizer{
       }
     
       solve() {
+        i=0;
         let src = this.map[document.getElementById("start").value];
         let dst = this.map[document.getElementById("end").value];
         this.clearCanvas();
