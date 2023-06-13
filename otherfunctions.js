@@ -16,7 +16,7 @@ function originalPos(){
     target.style.transform = 'rotate(0deg)';
     target.style.transition='transform 200ms ease-in';
     compass.style.transform = 'rotate(0deg)';
-    compass.style.transition='transform 200ms ease-in';
+//     compass.style.transition='transform 200ms ease-in';
     target.style.top=0;
     target.style.left=0;
     target.style.height='35em';
