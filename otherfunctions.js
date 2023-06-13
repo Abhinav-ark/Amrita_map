@@ -22,6 +22,9 @@ function originalPos(){
     target.style.height='35em';
     target.style.width='19em';
     //console.log("get",getCompassRotation());
+    if(i>=1){
+        adjustDir(i-1);
+    }
     rt=0;
 }
 
