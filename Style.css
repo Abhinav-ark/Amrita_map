@@ -174,6 +174,11 @@
     margin:auto;
 }
 
+#finishbtn:active{
+    transform: scale(1.1);
+    transition: all 10ms ease-in;
+}
+
 #confirmtxt{
     color: lightskyblue;
     font-size: 0.7em;
