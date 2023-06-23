@@ -69,13 +69,20 @@ function hideNav(){
     document.getElementById("navigator").style.display = "none";
 }
 
+const confirmfinish = document.getElementById("confirmfinish");
+confirmfinish.style.display="none";
+function finishNav(){
+    confirmfinish.style.display="grid";
+    confirmfinish.showModal();
+}
+
 var direction=document.getElementById('direction');
 var i=0;
 function showDir(){
     if(i==vis.aStarNodes.length){
         hideNav();
+        finishNav();
         i=0;
-        location.reload();
     }
     if(i<=0)
     {
