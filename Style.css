@@ -152,6 +152,37 @@
     margin-right:5px;
 }
 
+#confirmfinish{
+    width: 10em;
+    border-radius: 25px;
+    background-color:black ;
+    display: grid;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+#finishbtn{
+    border: solid 1px lightskyblue;
+    color: lightskyblue;
+    width: fit-content;
+    height: 2em;
+    font-size: 0.8em;
+    border-radius: 0.6em;
+    padding: 0.5em;
+    padding-top: 0.2em;
+    padding-bottom: 0.2em;
+    display: flex;
+    margin:auto;
+}
+
+#confirmtxt{
+    color: lightskyblue;
+    font-size: 0.7em;
+}
+
+#confirmfinish::backdrop{
+    background: rgba(0, 0, 0, 0.7);
+}
+
 #btncontainer{
     display: flex;
     width: fit-content;
@@ -225,6 +256,13 @@
     background-color: red;
     transform: scale(1.1);
     transition: all 10ms ease-in;
+}
+
+#done{
+    color: lightskyblue;
+    font-size: 5em;
+    font-weight: bolder;
+    text-align: center;
 }
 
 .moreControls, .moreControls-right{
