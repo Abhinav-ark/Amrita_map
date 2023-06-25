@@ -78,13 +78,14 @@
   </div>
 </div>
 <dialog id="confirmfinish">
+  <span class="material-symbols-outlined close" onclick="closeFinish()">close</span>
   <span id="done" class="material-symbols-outlined">task_alt</span>
   <p id="confirmtxt">You've successfully reached your destination.</p>
   <div id="finishbtn" onclick="location.reload()"><p style="margin:auto;">Finish</p></div>
 </dialog>
 <div id="placescontainer">
   <div id="placestitlecontainer">
-    <h2>On your way</h2>
+    <h2>On your way...</h2>
   </div>
   <div id="places"></div>
   <template id="placetemplate">
