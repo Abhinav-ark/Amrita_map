@@ -109,6 +109,7 @@ function showDir(){
     // console.log("get",getCompassRotation(),vis.aStarDirs[i],vis.aStarDirs);
     adjustDir(i);
     i=i+1;
+    loadOnYourWay();
 }
 
 function goBackDir(){
@@ -149,7 +150,7 @@ function loadOnYourWay(){
     // var placeele = placetemplate.content.cloneNode(true);
     // placescontainer.appendChild(policestation);
 
-    for (let j = 0; j < vis.aStarNodes.length; j++) {
+    for (let j = i-1; j < vis.aStarNodes.length; j++) {
         var placeelement = placetemplate.content.cloneNode(true);
         placeelement.querySelector('.placetitle').innerHTML=vis.aStarNodes[j];
         var description = placeDetails[vis.aStarNodes[j]];
