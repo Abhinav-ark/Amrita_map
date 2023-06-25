@@ -18,6 +18,12 @@
     }
 }
 
+@keyframes textclip {
+    to {
+      background-position: 200% center;
+    }
+}
+
 
 #map{
     margin:auto;
@@ -44,6 +50,22 @@
     width: inherit;
     height: inherit;
     display: flex;
+    margin-top: 1.5em;
+}
+
+#placestitlecontainer h2{
+    /* text-transform: uppercase; */
+    background-image: linear-gradient(-225deg, white 0%, rgba(255,255,255,0.9) 20%, rgba(255,255,255,0.5) 50%, rgba(255,255,255,0.9) 80%, white 100%);
+    background-size: auto auto;
+    background-clip: border-box;
+    background-size: 200% auto;
+    color: #fff;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: textclip 2s linear infinite;
+    animation-direction: reverse;
+    font-size: 1.8em;
+    font-weight: 1000;
 }
 
 ::-webkit-scrollbar {
@@ -172,6 +194,19 @@
     background-color:black ;
     display: grid;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+.close{
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 1.2em;
+    font-weight: 2000;
+    justify-self: end;
+    width: fit-content;
+}
+
+.close:active{
+    transform: scale(1.1);
+    transition: all 10ms ease-in;
 }
 
 #finishbtn{
@@ -406,11 +441,16 @@ body{
  .place{
     padding: 15px;
     border-radius: 25px;
-    border: white solid 1px;
+    border: rgba(255, 255, 255, 1) solid 1px;
     height: fit-content;
     width: 19em;
     display: flex;
     margin-bottom: 15px;
+ }
+
+ .place:hover{
+    transform: scale(1.1);
+    transition: all ease-in 200ms;
  }
 
  .placeimg{
@@ -439,7 +479,11 @@ body{
  .placetitle{
     float: left;
     padding: 0px;
+    /* background: linear-gradient(-225deg, #231557 0%, #44107a 5%, #ff1361 67%, #fff800 100%);
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text; */
  }
+
  
  .placedesc{
     float: left;
@@ -458,7 +502,7 @@ body{
  .more{
     text-align: left;
     float: left;
-    color: white;
+    color: rgba(255, 255, 255, 0.7);
  }
 
  *{
