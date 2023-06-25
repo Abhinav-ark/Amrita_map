@@ -121,7 +121,7 @@
     margin: auto;
     margin-top: 20px;
     width: 18em;
-    height: 5em;
+    min-height: 5em;
     padding: 1em;
     display: flex;
 }
@@ -163,6 +163,7 @@
     margin-bottom: auto;
     justify-self: end;
     position: relative;
+    text-align: left;
 }
 
 #direction{
@@ -181,6 +182,10 @@
     display: flex;
 }
 
+#dirnextbtn span{
+    font-size: 1.4em;
+}
+
 #dirbackbtn{
     border: solid 1px lightskyblue;
     color: lightskyblue;
@@ -191,6 +196,11 @@
     padding-left: 0.2em;
     display: flex;
     margin-right:5px;
+}
+
+#dirbackbtn span{
+    font-size: 1.4em;
+    padding-top: 0.16em;
 }
 
 #confirmfinish{
