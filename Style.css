@@ -126,6 +126,11 @@
     display: flex;
 }
 
+#navigator:hover{
+    transform: scale(1.1);
+    transition: all 200ms ease-in;
+}
+
 #dirImage{
     /* border: solid 1px white; */
     margin-top: auto;
