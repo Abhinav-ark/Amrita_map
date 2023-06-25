@@ -76,11 +76,31 @@ function hideNav(){
     document.getElementById("navigator").style.display = "none";
 }
 
+
+const placescontainer = document.getElementById("placescontainer");
+function hideOnYourWay(){
+    console.log("got in");
+    placescontainer.style.display = "none";
+}
+
+function showOnYourWay(){
+    placescontainer.style.display = "block";
+}
+
 const confirmfinish = document.getElementById("confirmfinish");
 confirmfinish.style.display="none";
 function finishNav(){
     confirmfinish.style.display="grid";
     confirmfinish.showModal();
+}
+
+function closeFinish(){
+    confirmfinish.close();
+    confirmfinish.style.display="none";
+    goBackDir();
+    loadOnYourWay();
+    showNav();
+    showOnYourWay();
 }
 
 var direction=document.getElementById('direction');
@@ -89,7 +109,6 @@ function showDir(){
     if(i==vis.aStarNodes.length){
         hideNav();
         finishNav();
-        i=0;
     }
     if(i<=0)
     {
@@ -110,6 +129,10 @@ function showDir(){
     adjustDir(i);
     i=i+1;
     loadOnYourWay();
+    if(i==vis.aStarNodes.length+1){
+        hideOnYourWay();
+    }
+
 }
 
 function goBackDir(){
@@ -137,13 +160,12 @@ function clearPlaces() {
     }
 }
 
-const placescontainer = document.getElementById("placescontainer");
-const places = document.getElementById('places');
-placescontainer.style.display="none";
 
+const places = document.getElementById('places');
+hideOnYourWay();
 function loadOnYourWay(){
     clearPlaces();
-    placescontainer.style.display="block";
+    showOnYourWay();
     var placetemplate = document.getElementById("placetemplate");
 
 
