@@ -370,6 +370,14 @@ body{
     text-align: center;
 }
 
+.sandwichandscroller{
+    position: absolute;
+    left:1.2rem;
+    display: flex;
+    justify-content: space-between;
+    width: fit-content;
+}
+
 .scroller {
     height: 30px;
     line-height: 20px;
@@ -383,10 +391,17 @@ body{
     z-index: 2;
 }
 
+.scroller.fixed {
+    position: fixed;
+    left:4rem;
+}
+
 .imglogo{
     float:right;
     height: 2em;
     width: 6.75em;
+    position: absolute;
+    right: 20px;
 }
 
 .scroller span {
@@ -401,15 +416,12 @@ body{
 }
 
 .heading {
-    width: 19em;
+    width: 23em;
     height: fit-content;
     padding: 10px;
     /* border: 1px white solid; */
     margin: auto;
-    margin-bottom: 10px;
-    display: flex;
-    justify-content: space-evenly;
-    align-content: space-evenly;
+    margin-bottom: 40px;
     justify-items: start;
 }
 
@@ -524,9 +536,15 @@ body{
  }
 
  .sandwich{
-    position: relative;
-    right:40px;
-    margin-right: -50px;
+    background-color: transparent;
+    border:none;
+    z-index: 2;
+    margin-right: 5px;
+ }
+
+ .sandwich.is-active{
+    position: fixed;
+    left:1.1rem;
     background-color: transparent;
     border:none;
     z-index: 3;
