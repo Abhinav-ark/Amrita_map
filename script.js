@@ -9,29 +9,24 @@ class Visualizer{
         this.ctx = ctx;
         this.distance = distance;
         this.totalDist=0;
-        this.map={"Police Station":0, "Burger":1, "Mall":2, "Arcade":3, "Bridge":4, "Railway Station":5, "Island":6, "Store":7};
-        this.refs={0:"Police Station", 1:"Burger", 2:"Burger", 3:"Arcade", 4:"Bridge", 5:"Railway Station", 6:"Island", 7:"Store"};
+        this.map=map;
+        this.refs=refs;
         this.aStarNodes=[];
         this.aStarDists=[];
+        this.aStarDirs=[];
+        this.aStarPoints=[];
+        this.src=0;
     }
 
     generatePoints = () =>{
         this.distance.innerText = "";
         clearInterval(this.int);
-        this.points = [{x:Math.floor(0.71*this.width), y:Math.floor(0.15*this.height), id:0, distance:Infinity, parent:null},
-                       {x:Math.floor(0.72*this.width), y:Math.floor(0.27*this.height), id:1, distance:Infinity, parent:null},
-                       {x:Math.floor(0.6*this.width), y:Math.floor(0.15*this.height), id:2, distance:Infinity, parent:null},
-                       {x:Math.floor(0.6*this.width), y:Math.floor(0.27*this.height), id:3, distance:Infinity, parent:null},
-                       {x:Math.floor(0.68*this.width), y:Math.floor(0.5*this.height), id:4, distance:Infinity, parent:null},
-                       {x:Math.floor(0.6*this.width), y:Math.floor(0.59*this.height), id:5, distance:Infinity, parent:null},
-                       {x:Math.floor(0.85*this.width), y:Math.floor(0.65*this.height), id:6, distance:Infinity, parent:null},
-                       {x:Math.floor(0.63*this.width), y:Math.floor(0.66*this.height), id:7, distance:Infinity, parent:null},
-                       {x:Math.floor(0.69*this.width), y:Math.floor(0.8*this.height), id:8, distance:Infinity, parent:null}];
+        this.points = points;
         
         //all neighbours should be in sorted order
         //remove 5 7 for accessibility
         this.edges = {0:[1,2],1:[0,3,4],2:[0,3],3:[1,2],4:[1,5],5:[4,7],7:[5,6],6:[7],8:[]};
-        this.dist={0:{1:{distance:100},2:{distance:50}},1:{0:{distance:100},3:{distance:50},4:{distance:200}},2:{0:{distance:50},3:{distance:100}},3:{1:{distance:50},2:{distance:100}},4:{1:{distance:200},5:{distance:70}},5:{4:{distance:70},7:{distance:30}},6:{7:{distance:100}},7:{5:{distance:30},6:{distance:100}},8:{}};
+        this.dist={0:{1:{distance:100,direction:180},2:{distance:50,direction:270}},1:{0:{distance:100,direction:0},3:{distance:50,direction:270},4:{distance:200,direction:180}},2:{0:{distance:50,direction:90},3:{distance:100,direction:180}},3:{1:{distance:50,direction:90},2:{distance:100,direction:0}},4:{1:{distance:200,direction:0},5:{distance:70,direction:200}},5:{4:{distance:70,direction:20},7:{distance:30,direction:160}},6:{7:{distance:100,direction:270}},7:{5:{distance:30,direction:345},6:{distance:100,direction:90}},8:{}};
         //this.edges = {0:[1,2],1:[2,6],2:[0,1,3,4],3:[2,4],4:[2,5],5:[4,6],6:[1,5],7:[]};
 
         //this.sortEdges();
@@ -92,9 +87,14 @@ class Visualizer{
         return three;
     }
 
-    // getDirection(A,B){
-
-    // }
+    getDirection(A,B){
+      var one = this.dist[A];
+      // console.log(A, B, one);
+      var two = one[B];
+      // console.log(two);
+      var three = two["direction"];
+      return three;
+    }
 
     sortEdges(){
         Object.keys(this.edges).forEach(node => {
@@ -196,6 +196,9 @@ class Visualizer{
           console.log(node.id,node.parent,this.getDistance(node.id,node.parent));
           this.aStarNodes.unshift(this.refs[node.id]);
           this.aStarDists.unshift(this.getDistance(node.id,node.parent));
+          console.log(this.getDirection(node.parent,node.id));
+          this.aStarDirs.unshift(this.getDirection(node.parent,node.id));
+          this.aStarPoints.unshift(node);
           lines.push([node, this.points[node.parent], "red"].slice());
           node = this.points[node.parent];
           
@@ -238,12 +241,17 @@ class Visualizer{
           if (i >= lines.length) {
             clearInterval(interval);
           }
-        }, 800);
+        }, 200);
     
         return interval;
       }
     
       solve() {
+        i=0;
+        this.aStarNodes=[];
+        this.aStarDists=[];
+        this.aStarDirs=[];
+        this.aStarPoints=[];
         let src = this.map[document.getElementById("start").value];
         let dst = this.map[document.getElementById("end").value];
         this.clearCanvas();
@@ -252,6 +260,7 @@ class Visualizer{
         if (src !== 0 || dst !== 0) {
           // this.sortEdges();
           let distance = this.aStar(src, dst);
+          this.src = src;
           if(distance==undefined)
           {
             this.distance.innerText = "Place Not Accessible.";
@@ -260,6 +269,7 @@ class Visualizer{
             this.distance.innerText = "Shortest travel distance: " + distance+'m';
             showNav();
             showDir();
+            loadOnYourWay();
             console.log(this.aStarNodes);
             console.log(this.aStarDists);
           }
