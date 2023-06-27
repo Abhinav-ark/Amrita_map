@@ -599,7 +599,7 @@ body{
     position: fixed;
     top:0;
     left:0;
-    width: 55%;
+    width: 12rem;
     height: 100%;
     display: block;
     z-index: 2;
