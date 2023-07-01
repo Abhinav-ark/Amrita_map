@@ -105,6 +105,7 @@ function closeFinish(){
 
 moreinfo = document.getElementById('moreinfo');
 function showMore(){
+    iconref=0;
     moreinfo.style.display="block";
     moreinfo.showModal();
 }
