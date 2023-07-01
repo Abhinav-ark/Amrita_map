@@ -62,9 +62,9 @@ function bridge(){
 
 function railwaystation(){
     moreinfotitle.innerHTML="Ettimadai Railway Station";
-    images[0].src="./Res/Carousel/RailwayStation1.jpg";
-    images[1].src="./Res/Carousel/RailwayStation2.jpg";
-    images[2].src="./Res/Carousel/RailwayStation3.jpg";
+    images[0].src="./Res/Carousel/Railwaystation1.jpg";
+    images[1].src="./Res/Carousel/Railwaystation2.jpg";
+    images[2].src="./Res/Carousel/Railwaystation3.jpg";
     moreinfotext.innerHTML="Two Platform Campus Railway Station of Amrita, Providing connectivity to Coimbatore and Palakkad city. <br> <b>Train Timings: <br> Palakkad 10:00am, 5:00pm <br> Coimbatore 8:15am, 3:15pm</b> ";
     showMore();
 }
