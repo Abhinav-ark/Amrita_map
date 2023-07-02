@@ -105,12 +105,15 @@ function closeFinish(){
 
 moreinfo = document.getElementById('moreinfo');
 function showMore(){
-    iconref=0;
+    // iconref=0;
+    // carousel.scrollLeft=0;
     moreinfo.style.display="block";
     moreinfo.showModal();
 }
 
 function closeMore(){
+    resetCarousel();
+    showHideIcons();
     moreinfo.close();
     moreinfo.style.display="none";
 }
