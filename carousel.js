@@ -6,6 +6,13 @@ let isDragStart = false, isDragging = false, prevPageX, prevScrollLeft, position
 var iconref =0;
 var scroll = [0,214,428]; 
 
+const resetCarousel = () => {
+    iconref=0;
+    carousel.classList.add("dragging");
+    carousel.scrollLeft = 0;
+    carousel.classList.remove("dragging");
+}
+
 const showHideIcons = () => {
     // showing and hiding prev/next icon according to carousel scroll left value
     if(iconref>2){iconref=2}else{if(iconref<0){iconref=0}};
