@@ -1,8 +1,10 @@
 const sandwich = document.querySelector('.sandwich');
-const navbar = document.querySelector('.mobile-nav');;
+const navbar = document.querySelector('.mobile-nav');
 const scroller = document.querySelector('.scroller');
 
+
 sandwich.addEventListener('click', closenav);
+
 
 function closenav()
 {

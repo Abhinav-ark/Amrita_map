@@ -441,7 +441,7 @@ body{
  }
 
  .searchcontainer{
-    width:19.5em;
+    width:100%;
     height:fit-content;
     margin: auto;
     display: flex;

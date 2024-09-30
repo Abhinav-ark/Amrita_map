@@ -22,14 +22,14 @@ class Visualizer{
       this.distance.innerText = "";
       clearInterval(this.int);
       this.points = [{x:Math.floor(0.71*this.width), y:Math.floor(0.15*this.height), id:0, distance:Infinity, parent:null},
-                     {x:Math.floor(0.72*this.width), y:Math.floor(0.27*this.height), id:1, distance:Infinity, parent:null},
-                     {x:Math.floor(0.6*this.width), y:Math.floor(0.15*this.height), id:2, distance:Infinity, parent:null},
-                     {x:Math.floor(0.6*this.width), y:Math.floor(0.27*this.height), id:3, distance:Infinity, parent:null},
-                     {x:Math.floor(0.68*this.width), y:Math.floor(0.5*this.height), id:4, distance:Infinity, parent:null},
-                     {x:Math.floor(0.6*this.width), y:Math.floor(0.59*this.height), id:5, distance:Infinity, parent:null},
-                     {x:Math.floor(0.85*this.width), y:Math.floor(0.65*this.height), id:6, distance:Infinity, parent:null},
-                     {x:Math.floor(0.63*this.width), y:Math.floor(0.66*this.height), id:7, distance:Infinity, parent:null},
-                     {x:Math.floor(0.69*this.width), y:Math.floor(0.8*this.height), id:8, distance:Infinity, parent:null}];
+                      {x:Math.floor(0.72*this.width), y:Math.floor(0.27*this.height), id:1, distance:Infinity, parent:null},
+                      {x:Math.floor(0.6*this.width), y:Math.floor(0.15*this.height), id:2, distance:Infinity, parent:null},
+                      {x:Math.floor(0.6*this.width), y:Math.floor(0.27*this.height), id:3, distance:Infinity, parent:null},
+                      {x:Math.floor(0.68*this.width), y:Math.floor(0.5*this.height), id:4, distance:Infinity, parent:null},
+                      {x:Math.floor(0.6*this.width), y:Math.floor(0.59*this.height), id:5, distance:Infinity, parent:null},
+                      {x:Math.floor(0.85*this.width), y:Math.floor(0.65*this.height), id:6, distance:Infinity, parent:null},
+                      {x:Math.floor(0.63*this.width), y:Math.floor(0.66*this.height), id:7, distance:Infinity, parent:null},
+                      {x:Math.floor(0.69*this.width), y:Math.floor(0.8*this.height), id:8, distance:Infinity, parent:null}];
       
       //all neighbours should be in sorted order
       //remove 5 7 for accessibility
@@ -269,12 +269,15 @@ class Visualizer{
         // this.sortEdges();
         let distance = this.aStar(src, dst);
         this.src = src;
+
+        showDistanceContainer();
         if(distance==undefined)
         {
           this.distance.innerText = "Place Not Accessible.";
         }
         else{
-          this.distance.innerText = "Shortest travel distance: " + distance+'m';
+
+          this.distance.innerText =  "Shortest travel distance: " + distance+'m';
           showNav();
           showDir();
           console.log(this.aStarNodes);
@@ -292,23 +295,33 @@ document.addEventListener("DOMContentLoaded", () => {
   let img = new Image();
   img.src = './Res/VCmap.jpg';
 
+  var canvasmap=document.getElementById("map");
+  document.getElementById("canvas").setAttribute("width",canvasmap.clientWidth);
+  
+  document.getElementById("canvas").setAttribute("height",700);
+
+
+
+
   var canvas = new fabric.Canvas("canvas");
-  // var canvas=document.getElementById("canvas")
   const width = canvas.width;
-  const height = canvas.height
+  const height = canvas.height;
+  
   let ctx = canvas.getContext("2d");
 
   let distance = document.getElementById('distance');
+  
 
   
   img.onload = function () {
       vis = new Visualizer(img, width, height, ctx, distance);
-      vis.generatePoints();     // FILL THE CANVAS WITH THE IMAGE.
+      vis.generatePoints();
   }
   
   let search = document.getElementById('search');
   search.onclick = ()=>vis.solve();
 
 });
-
-
+  
+  
+  

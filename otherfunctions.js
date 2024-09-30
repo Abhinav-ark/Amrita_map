@@ -5,9 +5,34 @@ function swapValues(){
     start.value = end.value;
     end.value = temp;
 }
+
+
+// 0->desktop
+//1->mobile
+var rindex=0;
+if(window.screen.width<540)
+{
+    rindex=1;
+}
+else{
+    rindex=0;
+}
+
+function showDistanceContainer(){
+    document.getElementsByClassName("distanceCont")[0].style.display="flex";
+}
+
+function hideDistanceContainer(){
+    document.getElementsByClassName("distanceCont")[0].style.display="none";
+}
+
 function clearSearch(){
     document.getElementById("start").value=null;
     document.getElementById("end").value=null;
+
+    clearPlaces();
+    hideOnYourWay();
+    hideDistanceContainer();
     vis.generatePoints();
     hideNav();
 }
@@ -68,24 +93,54 @@ function mapNavInfo(){
     alert("On a TouchSceen, Use 1 finger to Pan, 2 fingers to zoom and 3 fingers to rotate.");
 }
 
+
 function showNav(){
-    document.getElementById("navigator").style.display = "flex";
+    if(window.screen.width<540)
+    {
+        console.log("ok in");
+        document.getElementsByClassName("navigators")[1].style.display = "flex";
+    }
+    else
+    {
+        document.getElementsByClassName("navigators")[0].style.display = "flex";
+    }
 }
 
 function hideNav(){
-    document.getElementById("navigator").style.display = "none";
+    if(window.screen.width<540)
+    {
+        document.getElementsByClassName("navigators")[1].style.display = "none";
+    }
+    else
+    {
+        document.getElementsByClassName("navigators")[0].style.display = "none";
+    }
 }
 
 
-const placescontainer = document.getElementById("placescontainer");
+
+
 function hideOnYourWay(){
-    console.log("got in");
-    placescontainer.style.display = "none";
+    if(window.screen.width<540)
+    {
+        document.getElementsByClassName("placecont")[1].style.display = "none";
+    
+    }
+    else{
+        document.getElementsByClassName("placecont")[0].style.display = "none";
+    }
 }
 
 function showOnYourWay(){
-    placescontainer.style.display = "block";
-}
+    if(window.screen.width<540)
+        {
+            document.getElementsByClassName("placecont")[1].style.display = "block";
+        
+        }
+        else{
+            document.getElementsByClassName("placecont")[0].style.display = "block";
+        }
+    }
 
 const confirmfinish = document.getElementById("confirmfinish");
 confirmfinish.style.display="none";
@@ -118,7 +173,19 @@ function closeMore(){
     moreinfo.style.display="none";
 }
 
-var direction=document.getElementById('direction');
+var direction=document.getElementsByClassName('direction')[1];
+
+
+if(window.screen.width<=540)
+{
+    direction=document.getElementsByClassName('direction')[1];
+
+}
+else{
+    direction=document.getElementsByClassName('direction')[0];
+
+}
+
 var i=0;
 function showDir(){
     if(i==vis.aStarNodes.length){
@@ -176,13 +243,15 @@ function clearPlaces() {
 }
 
 
-const places = document.getElementById('places');
+var places = document.getElementsByClassName('places')[rindex];
+
 hideOnYourWay();
+
 function loadOnYourWay(){
     clearPlaces();
     showOnYourWay();
-    var placetemplate = document.getElementById("placetemplate");
-
+    var placetemplate = document.getElementsByClassName("placetemplate")[rindex];
+    document.getElementsByClassName("placetcont")[rindex].style.display="flex";
 
     // var placeele = placetemplate.content.cloneNode(true);
     // placescontainer.appendChild(policestation);
