@@ -30,12 +30,10 @@ function originalPos(){
     target.style.transform = 'rotate(0deg)';
     target.style.transition='transform 200ms ease-in';
     compass.style.transform = 'rotate(0deg)';
-//     compass.style.transition='transform 200ms ease-in';
     target.style.top=0;
     target.style.left=0;
     target.style.height='35em';
     target.style.width='19em';
-    //console.log("get",getCompassRotation());
     if(i>=1){
         adjustDir(i-1);
     }
@@ -63,8 +61,6 @@ function rotate90(){
     target.style.transform = 'rotate('+rt+'deg)';
     target.style.transition='transform 200ms ease-in';
     compass.style.transform = 'rotate('+rt+'deg)';
-    // compass.style.transition='transform 200ms ease-in';
-    //console.log("get",getCompassRotation()+180,vis.aStarDirs[i],i);
     adjustDir(i-1);
     console.log("called");
 }
@@ -95,26 +91,14 @@ function showNav(){
 }
 
 function hideNav(){
-    // if(window.screen.width<540)
-    // {
-        document.getElementsByClassName("navigators")[1].style.display = "none";
-    // }
-    // else
-    // {
-        document.getElementsByClassName("navigators")[0].style.display = "none";
-    // }
+    document.getElementsByClassName("navigators")[1].style.display = "none";
+    document.getElementsByClassName("navigators")[0].style.display = "none";
 }
 
 
 function hideOnYourWay(){
-    // if(window.screen.width<540)
-    // {
-        document.getElementsByClassName("placecont")[1].style.display = "none";
-    
-    // }
-    // else{
-        document.getElementsByClassName("placecont")[0].style.display = "none";
-    // }
+    document.getElementsByClassName("placecont")[1].style.display = "none";
+    document.getElementsByClassName("placecont")[0].style.display = "none";
 }
 
 function showOnYourWay(){
@@ -148,8 +132,6 @@ function closeFinish(){
 
 moreinfo = document.getElementById('moreinfo');
 function showMore(){
-    // iconref=0;
-    // carousel.scrollLeft=0;
     moreinfo.style.display="block";
     moreinfo.showModal();
 }
@@ -260,8 +242,6 @@ function loadOnYourWay(){
     document.getElementsByClassName("placetcont")[rindex].style.display="flex";
     document.getElementsByClassName("placetcont")[Math.abs(rindex-1)].style.display="none";
 
-    // var placeele = placetemplate.content.cloneNode(true);
-    // placescontainer.appendChild(policestation);
 
     for (let j = i-1; j < vis.aStarNodes.length; j++) {
         var placeelement = placetemplate.content.cloneNode(true);
@@ -272,12 +252,7 @@ function loadOnYourWay(){
         placeelement.querySelector('.placedesc .more').onclick=description['fn'];
         places.appendChild(placeelement);
     }
-    // var policestation = placetemplate.content.cloneNode(true);
-    // var ps2 = placetemplate.content.cloneNode(true);
-
-    // placescontainer.appendChild(policestation);
-    // ps2.querySelector('.placetitle').innerHTML='PS2';
-    // placescontainer.appendChild(ps2);
+    
 }
 
 function yellowPoint(point,lastpoint){
