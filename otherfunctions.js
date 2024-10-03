@@ -7,17 +7,6 @@ function swapValues(){
 }
 
 
-// 0->desktop
-//1->mobile
-var rindex=0;
-if(window.screen.width<540)
-{
-    rindex=1;
-}
-else{
-    rindex=0;
-}
-
 function showDistanceContainer(){
     document.getElementsByClassName("distanceCont")[0].style.display="flex";
 }
@@ -61,8 +50,6 @@ function getCompassRotation(){
     return angle < 0 ? angle+360 : angle; 
 }
 
-var dirArrow = document.querySelector("#dirArrow");
-
 function adjustDir(i){
     var deg=(getCompassRotation()+vis.aStarDirs[i])%360;
     dirArrow.style.transform='rotate('+deg+'deg)';
@@ -97,53 +84,54 @@ function mapNavInfo(){
 function showNav(){
     if(window.screen.width<540)
     {
-        console.log("ok in");
+        document.getElementsByClassName("navigators")[0].style.display = "none";
         document.getElementsByClassName("navigators")[1].style.display = "flex";
     }
     else
     {
         document.getElementsByClassName("navigators")[0].style.display = "flex";
+        document.getElementsByClassName("navigators")[1].style.display = "none";
     }
 }
 
 function hideNav(){
-    if(window.screen.width<540)
-    {
+    // if(window.screen.width<540)
+    // {
         document.getElementsByClassName("navigators")[1].style.display = "none";
-    }
-    else
-    {
+    // }
+    // else
+    // {
         document.getElementsByClassName("navigators")[0].style.display = "none";
-    }
+    // }
 }
 
 
-
-
 function hideOnYourWay(){
-    if(window.screen.width<540)
-    {
+    // if(window.screen.width<540)
+    // {
         document.getElementsByClassName("placecont")[1].style.display = "none";
     
-    }
-    else{
+    // }
+    // else{
         document.getElementsByClassName("placecont")[0].style.display = "none";
-    }
+    // }
 }
 
 function showOnYourWay(){
     if(window.screen.width<540)
         {
+            document.getElementsByClassName("placecont")[0].style.display = "none";
             document.getElementsByClassName("placecont")[1].style.display = "block";
-        
         }
         else{
             document.getElementsByClassName("placecont")[0].style.display = "block";
+            document.getElementsByClassName("placecont")[1].style.display = "none";
         }
     }
 
 const confirmfinish = document.getElementById("confirmfinish");
 confirmfinish.style.display="none";
+
 function finishNav(){
     confirmfinish.style.display="grid";
     confirmfinish.showModal();
@@ -173,19 +161,6 @@ function closeMore(){
     moreinfo.style.display="none";
 }
 
-var direction=document.getElementsByClassName('direction')[1];
-
-
-if(window.screen.width<=540)
-{
-    direction=document.getElementsByClassName('direction')[1];
-
-}
-else{
-    direction=document.getElementsByClassName('direction')[0];
-
-}
-
 var i=0;
 function showDir(){
     if(i==vis.aStarNodes.length){
@@ -207,7 +182,6 @@ function showDir(){
         yellowPoint(vis.aStarPoints[i-1],vis.aStarPoints[i-2]);
     }
     direction.innerText = "Go " + vis.aStarDists[i] +"m towards "+vis.aStarNodes[i]+".";
-    // console.log("get",getCompassRotation(),vis.aStarDirs[i],vis.aStarDirs);
     adjustDir(i);
     i=i+1;
     loadOnYourWay();
@@ -234,24 +208,57 @@ function goBackDir(){
 }
 
 
+// 0->desktop
+//1->mobile
+var rindex=0;
+
+var places = document.getElementsByClassName('places')[rindex];
+
+var direction=document.getElementsByClassName('direction')[rindex];
+
+var dirArrow = document.getElementsByClassName("dirArrow")[rindex];
+
+function handleResize(){
+    if(window.screen.width<540)
+    {
+        rindex=1;
+    }
+    else{
+        rindex=0;
+    }
+    places = document.getElementsByClassName('places')[rindex];
+    direction = document.getElementsByClassName('direction')[rindex];
+    dirArrow = document.getElementsByClassName("dirArrow")[rindex];
+}
+
+handleResize();
+
+window.addEventListener("resize", () => {
+    handleResize();
+    showNav();
+    i = i-1;
+    showDir();
+});
+
 function clearPlaces() {
-    var div = document.getElementById('places');
+    var div = document.getElementsByClassName('places')[rindex];
       
     while(div.firstChild) {
         div.removeChild(div.firstChild);
     }
 }
 
-
-var places = document.getElementsByClassName('places')[rindex];
-
 hideOnYourWay();
 
 function loadOnYourWay(){
+
     clearPlaces();
     showOnYourWay();
+
     var placetemplate = document.getElementsByClassName("placetemplate")[rindex];
+
     document.getElementsByClassName("placetcont")[rindex].style.display="flex";
+    document.getElementsByClassName("placetcont")[Math.abs(rindex-1)].style.display="none";
 
     // var placeele = placetemplate.content.cloneNode(true);
     // placescontainer.appendChild(policestation);
