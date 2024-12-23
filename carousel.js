@@ -85,3 +85,39 @@ carousel.addEventListener("touchmove", dragging);
 
 document.addEventListener("mouseup", dragStop);
 carousel.addEventListener("touchend", dragStop);
+
+const mapContainer = document.querySelector("#map"); // Replace with the correct map container selector
+
+let isPanning = false;
+let startX, startY, scrollLeft, scrollTop;
+
+mapContainer.addEventListener("mousedown", (e) => {
+    isPanning = true;
+    startX = e.pageX - mapContainer.offsetLeft;
+    startY = e.pageY - mapContainer.offsetTop;
+    scrollLeft = mapContainer.scrollLeft;
+    scrollTop = mapContainer.scrollTop;
+    mapContainer.style.cursor = "grabbing";
+});
+
+mapContainer.addEventListener("mousemove", (e) => {
+    if (!isPanning) return;
+    e.preventDefault();
+    const x = e.pageX - mapContainer.offsetLeft;
+    const y = e.pageY - mapContainer.offsetTop;
+    const walkX = (x - startX); // Horizontal distance moved
+    const walkY = (y - startY); // Vertical distance moved
+    mapContainer.scrollLeft = scrollLeft - walkX;
+    mapContainer.scrollTop = scrollTop - walkY;
+});
+
+mapContainer.addEventListener("mouseup", () => {
+    isPanning = false;
+    mapContainer.style.cursor = "grab";
+});
+
+mapContainer.addEventListener("mouseleave", () => {
+    isPanning = false;
+    mapContainer.style.cursor = "grab";
+});
+

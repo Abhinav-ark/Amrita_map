@@ -1,6 +1,6 @@
 var source = document.querySelector("#map");
 var target = document.querySelector("#canvas");
-var compass = document.querySelector('#compass');
+var compass = document.querySelector("#compass");
 var isPinching = false;
 var startPinchDistance = 0;
 var startWidth = 0;
@@ -35,6 +35,36 @@ source.addEventListener("wheel", function (e) {
   }
 });
 
+source.addEventListener("mousedown", function (e) {
+  (isDragging = true), (dragStartX = e.clientX);
+  (dragStartY = e.clientY), (currentPanX = getStyleInt(target, "left"));
+  currentPanY = getStyleInt(target, "top");
+});
+
+source.addEventListener("mousemove", function (e) {
+  if (isDragging) {
+    var deltaX = e.clientX - dragStartX;
+    var deltaY = e.clientY - dragStartY;
+    var newX = currentPanX + deltaX;
+    var newY = currentPanY + deltaY;
+
+    // Limit pan displacement
+    newX = Math.max(Math.min(newX, maxDisplacement), -maxDisplacement);
+    newY = Math.max(Math.min(newY, maxDisplacement), -maxDisplacement);
+
+    setStyleInt(target, "left", newX);
+    setStyleInt(target, "top", newY);
+  }
+});
+
+source.addEventListener("mouseup", function () {
+  isDragging = false;
+});
+
+source.addEventListener("mouseleave", function () {
+  isDragging = false;
+});
+
 source.addEventListener("touchstart", function (e) {
   if (e.touches.length === 2) {
     // Start of pinch gesture
@@ -55,7 +85,7 @@ source.addEventListener("touchmove", function (e) {
     // Pinch gesture
     var currentPinchDistance = getPinchDistance(e.touches[0], e.touches[1]);
     var scale = currentPinchDistance / startPinchDistance;
-    scale = startWidth * scale / getStyleInt(target, "width");
+    scale = (startWidth * scale) / getStyleInt(target, "width");
     target.style.transform = `scale(${scale})`;
   } else if (e.touches.length === 1) {
     // Pan gesture
@@ -91,15 +121,15 @@ source.addEventListener("touchstart", function (e) {
 source.addEventListener("touchmove", function (e) {
   if (e.touches.length === 3) {
     // Rotate
-    rt=0;
+    rt = 0;
     var touchX = e.touches[0].clientX;
     var touchY = e.touches[0].clientY;
     var deltaX = touchX - touchStartX;
     var deltaY = touchY - touchStartY;
     rotationAngle += (deltaX + deltaY) * 0.02;
-    target.style.transform = 'rotate(' + rotationAngle + 'deg)';
-    compass.style.transform= 'rotate(' + rotationAngle + 'deg)';
-    adjustDir(i-1);
+    target.style.transform = "rotate(" + rotationAngle + "deg)";
+    compass.style.transform = "rotate(" + rotationAngle + "deg)";
+    adjustDir(i - 1);
   }
 });
 
