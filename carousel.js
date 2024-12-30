@@ -1,23 +1,50 @@
-firstImg = carousel.querySelectorAll("img")[0],
-arrowIcons = document.querySelectorAll(".wrapper i");
+const firstImg = carousel.querySelectorAll("img")[0];
+const arrowIcons = document.querySelectorAll(".wrapper i");
 
-let isDragStart = false, isDragging = false, prevPageX, prevScrollLeft, positionDiff;
+let isDragStart = false, 
+    isDragging = false, 
+    prevPageX, 
+    prevScrollLeft, 
+    positionDiff;
 
-var iconref =0;
-var scroll = [0,214,428]; 
+let iconref = 0;
+const scroll = [0, 214, 428];
+
+const preloadVisibleImages = () => {
+    const visibleImages = Array.from(carousel.querySelectorAll("img"))
+        .filter((img, index) => {
+            const imgPosition = index - iconref;
+            return imgPosition >= -1 && imgPosition <= 1;
+        });
+
+    visibleImages.forEach(img => {
+        if (img.dataset.src && !img.classList.contains('loaded')) {
+            loadImage(img);
+        }
+    });
+}
 
 const resetCarousel = () => {
-    iconref=0;
+    iconref = 0;
     carousel.classList.add("dragging");
     carousel.scrollLeft = 0;
     carousel.classList.remove("dragging");
+    
+    carousel.querySelectorAll("img").forEach(img => {
+        img.classList.remove('loaded');
+        img.src = '';
+    });
 }
 
 const showHideIcons = () => {
-    // showing and hiding prev/next icon according to carousel scroll left value
-    if(iconref>2){iconref=2}else{if(iconref<0){iconref=0}};
+    if (iconref > 2) {
+        iconref = 2;
+    } else if (iconref < 0) {
+        iconref = 0;
+    }
     arrowIcons[0].style.display = iconref == 0 ? "none" : "block";
     arrowIcons[1].style.display = iconref == 2 ? "none" : "block";
+    preloadVisibleImages();
 }
 
 arrowIcons.forEach(icon => {

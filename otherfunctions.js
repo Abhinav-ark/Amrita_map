@@ -1,3 +1,42 @@
+const imageObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            loadImage(entry.target);
+            observer.unobserve(entry.target);
+        }
+    });
+}, {
+    rootMargin: '50px 0px',
+    threshold: 0.1
+});
+
+function initializeLazyLoad(img) {
+    if ('IntersectionObserver' in window) {
+        imageObserver.observe(img);
+    } else {
+        loadImage(img);
+    }
+}
+
+function loadImage(img) {
+    if (img.dataset.src) {
+        const tempImage = new Image();
+        tempImage.onload = () => {
+            img.src = img.dataset.src;
+            img.classList.add('loaded');
+        };
+        tempImage.src = img.dataset.src;
+    }
+}
+
+function cleanupCarousel() {
+    images.forEach(img => {
+        img.src = '';
+        img.classList.remove('loaded');
+        img.removeAttribute('data-src');
+    });
+}
+
 function swapValues(){
     var start = document.getElementById("start");
     var end = document.getElementById("end");
@@ -150,10 +189,11 @@ function showMore(){
 }
 
 function closeMore(){
+    cleanupCarousel();
     resetCarousel();
     showHideIcons();
     moreinfo.close();
-    moreinfo.style.display="none";
+    moreinfo.style.display = "none";
 }
 
 var i=0;
@@ -245,28 +285,35 @@ function clearPlaces() {
 
 hideOnYourWay();
 
-function loadOnYourWay(){
+function loadOnYourWay() {
 
     clearPlaces();
     showOnYourWay();
 
     var placetemplate = document.getElementsByClassName("placetemplate")[rindex];
+    document.getElementsByClassName("placetcont")[rindex].style.display = "flex";
+    document.getElementsByClassName("placetcont")[Math.abs(rindex - 1)].style.display = "none";
 
-    document.getElementsByClassName("placetcont")[rindex].style.display="flex";
-    document.getElementsByClassName("placetcont")[Math.abs(rindex-1)].style.display="none";
-
-
-    for (let j = i-1; j < vis.aStarNodes.length; j++) {
+    for (let j = i - 1; j < vis.aStarNodes.length; j++) {
         var placeelement = placetemplate.content.cloneNode(true);
-        placeelement.querySelector('.placetitle').innerHTML=vis.aStarNodes[j];
+        placeelement.querySelector('.placetitle').innerHTML = vis.aStarNodes[j];
         var description = placeDetails[vis.aStarNodes[j]];
-        placeelement.querySelector('.placedesc .ptext').innerHTML=description['desc'];
-        placeelement.querySelector('.placeimg img').src=description['img'];
-        placeelement.querySelector('.placedesc .more').onclick=description['fn'];
+        
+        // Modify image loading
+        const img = placeelement.querySelector('.placeimg img');
+        img.classList.add('lazy-load-image');
+        img.dataset.src = description['img'];
+        img.src = '';
+        
+        placeelement.querySelector('.placedesc .ptext').innerHTML = description['desc'];
+        placeelement.querySelector('.placedesc .more').onclick = description['fn'];
         places.appendChild(placeelement);
+        
+        initializeLazyLoad(img);
     }
     
 }
+
 
 function yellowPoint(point,lastpoint){
     vis.ctx.fillStyle = 'yellow';

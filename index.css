@@ -649,6 +649,21 @@ body{
     cursor: pointer;
  }
 
+ .lazy-load-image {
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    background-color: #f3f3f3;
+}
+
+.lazy-load-image.loaded {
+    opacity: 1;
+}
+
+.carousel img.lazy-load-image {
+    min-height: 200px;
+    background: #f3f3f3;
+}
+
  .sandwich{
     background-color: transparent;
     border:none;

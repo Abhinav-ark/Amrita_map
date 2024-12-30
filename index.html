@@ -115,7 +115,9 @@
 
                 <template id="placetemplate" class="placetemplate">
                   <div class="place">
-                    <div class="placeimg"><img src="#" alt="Image"></div>
+                    <div class="placeimg">
+                      <img data-src="#" alt="Image" class="lazy-load-image" loading="lazy">
+                    </div>
                     <div class="placetxt">
                       <div class="placetitle">
                         <p class="ptext">...</p>
@@ -183,7 +185,9 @@
       <div id="places" class="places"></div>
       <template id="placetemplate" class="placetemplate">
         <div class="place">
-          <div class="placeimg"><img src="#" alt="Image"></div>
+          <div class="placeimg">
+            <img data-src="#" alt="Image" class="lazy-load-image" loading="lazy">
+          </div>
           <div class="placetxt">
             <div class="placetitle">
               <p class="ptext">...</p>
@@ -204,9 +208,9 @@
       <div class="wrapper">
         <i id="left" class="fa-solid fa-angle-left"></i>
         <div class="carousel">
-          <img src="" alt="img" draggable="false">
-          <img src="" alt="img" draggable="false">
-          <img src="" alt="img" draggable="false">
+          <img data-src="" loading="lazy" class="lazy-load-image" alt="img" draggable="false">
+          <img data-src="" loading="lazy" class="lazy-load-image" alt="img" draggable="false">
+          <img data-src="" loading="lazy" class="lazy-load-image" alt="img" draggable="false">
         </div>
         <i id="right" class="fa-solid fa-angle-right"></i>
       </div>
@@ -221,6 +225,12 @@
     <script src="./zoomscript.js"></script>
     <script src="./carousel.js"></script>
     <script src="./navbar.js"></script>
-
+    <script>
+      if (!('loading' in HTMLImageElement.prototype)) {
+          const script = document.createElement('script');
+          script.src = 'https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js';
+          document.body.appendChild(script);
+      }
+    </script>
 </body>
 </html>
